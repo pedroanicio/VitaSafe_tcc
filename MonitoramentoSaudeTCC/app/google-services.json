@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "962069053532",
+    "firebase_url": "https://sensor-saude-tcc-default-rtdb.firebaseio.com",
+    "project_id": "sensor-saude-tcc",
+    "storage_bucket": "sensor-saude-tcc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962069053532:android:5b64a47a6b25c094dba699",
+        "android_client_info": {
+          "package_name": "com.example.monitoramentosaudetcc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfMunRqnrrFK3lZZAcLBXIYN_5JPw2ywA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
