@@ -34,6 +34,7 @@ fun DashboardScreen(id: String) {
     var oxi by remember { mutableStateOf(0) }
     var temp by remember { mutableStateOf(0.0) }
     var queda by remember { mutableStateOf(false) }
+    var anomalia by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
 
@@ -101,6 +102,29 @@ fun DashboardScreen(id: String) {
             })
     }
 
+    val alertaRef = remember(id) {
+        FirebaseDatabase.getInstance()
+            .getReference("idosos/$id/alerta/anomalia")
+    }
+
+    DisposableEffect(alertaRef) {
+        val alertaListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                anomalia = snapshot.getValue(Boolean::class.java) ?: false
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                anomalia = false
+            }
+        }
+
+        alertaRef.addValueEventListener(alertaListener)
+
+        onDispose {
+            alertaRef.removeEventListener(alertaListener)
+        }
+    }
+
 
     Column(
         modifier = Modifier
@@ -133,7 +157,11 @@ fun DashboardScreen(id: String) {
             }
         }
 
-        if (queda) CardAlertaQueda()
+
+
+        if (anomalia) {
+            CardAlertaAnomalia()
+        }
 
         Spacer(Modifier.height(8.dp))
         GraficoBarras(bpmHistorico)
@@ -192,12 +220,12 @@ fun CircularIndicator(
 }
 
 @Composable
-fun CardAlertaQueda() {
-    // Anima a cor do alerta para piscar entre dois tons
+fun CardAlertaAnomalia() {
     val infiniteTransition = rememberInfiniteTransition()
+
     val animatedColor by infiniteTransition.animateColor(
-        initialValue = Color(0xFFF44336),
-        targetValue = Color(0xFFFFCDD2),
+        initialValue = Color(0xFFD32F2F),
+        targetValue = Color(0xFFFF8A80),
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 700),
             repeatMode = RepeatMode.Reverse
@@ -205,24 +233,51 @@ fun CardAlertaQueda() {
     )
 
     Card(
-        colors = CardDefaults.cardColors(containerColor = animatedColor),
+        colors = CardDefaults.cardColors(
+            containerColor = animatedColor
+        ),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(6.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Column {
-                Text("ALERTA DE QUEDA!", style = MaterialTheme.typography.titleMedium, color = Color.White)
-                Spacer(Modifier.height(4.dp))
-                Text("Queda detectada", style = MaterialTheme.typography.headlineMedium, color = Color.White)
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = "ALERTA DE SAÚDE",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = "Padrão anômalo detectado",
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = Color.White
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = "Verifique os sinais vitais do paciente.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White
+                )
             }
+
+            Spacer(modifier = Modifier.width(12.dp))
+
             Icon(
                 imageVector = Icons.Default.Warning,
-                contentDescription = "Alerta de Queda",
+                contentDescription = "Alerta de padrão anômalo",
                 tint = Color.White,
                 modifier = Modifier.size(48.dp)
             )
