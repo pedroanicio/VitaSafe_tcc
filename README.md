@@ -21,15 +21,8 @@ A mobile application and IoT solution for monitoring the health of elderly indiv
   - Heart rate (MAX30102 sensor)
   - Oxygen level (MAX30102)
   - Temperature (MLX90614)
-  - Fall detection (MPU6050)
 - Sends data to Firebase via Wi-Fi
 - Bluetooth provisioning available (under development)
-
----
-
-## 📱 Screenshots
-
-> _(under development)_
 
 ---
 
