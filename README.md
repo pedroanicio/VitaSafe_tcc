@@ -12,7 +12,6 @@ A mobile application and IoT solution for monitoring the health of elderly indiv
   - Heart rate (BPM)
   - Oxygen saturation (SpO2)
   - Body temperature
-  - Fall detection alert
   - Historical graph (BPM throughout the day)
 - Patient registration form
 - Local alert sound on fall detection
