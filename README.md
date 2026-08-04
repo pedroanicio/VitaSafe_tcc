@@ -70,5 +70,39 @@ The VitaSafe architecture integrates data acquisition, cloud storage, Machine Le
 │  Anomaly Detection     │  │  Real-Time Monitoring  │
 └────────────────────────┘  └────────────────────────┘
 
+```
 The ESP32 collects physiological measurements and transmits them through Wi-Fi to Firebase Realtime Database. The data can then be accessed by the mobile application and processed by the Machine Learning pipeline for anomaly detection.
 
+## Hardware
+
+The prototype uses low-cost embedded hardware and biomedical sensors.
+
+| Component | Purpose |
+|---|---|
+| **ESP32** | Main microcontroller and wireless communication |
+| **MAX30102** | Heart rate and SpO₂ measurement |
+| **MLX90614** | Non-contact temperature measurement |
+| **MPU6050** | Motion sensing used during system development |
+
+The ESP32 was selected due to its integrated Wi-Fi connectivity, low cost, and flexibility for embedded system development.
+
+## Software
+
+### Mobile Application
+
+The Android application was developed using:
+
+- **Kotlin**
+- **Jetpack Compose**
+- **Firebase Authentication**
+- **Firebase Realtime Database**
+
+The application provides an interface for authenticated users to monitor physiological measurements and patient information.
+
+The monitoring interface includes information such as:
+
+- **Current heart rate**
+- **SpO₂**
+- **Body temperature**
+- **Historical measurements**
+- **Patient information**
