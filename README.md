@@ -1,53 +1,74 @@
-# Elder Health Monitor
+# VitaSafe
 
-A mobile application and IoT solution for monitoring the health of elderly individuals in real time. The system uses an **ESP32-based device** to collect vital signs and send them to the **Firebase Realtime Database**, which are then visualized in an **Android app**.
+### Intelligent IoT-Based System for Real-Time Anomaly Detection in Elderly Healthcare
 
-## 🩺 Features
+VitaSafe is an intelligent healthcare monitoring system developed as a Final Year Project (TCC) at the Federal Institute of Education, Science and Technology of Minas Gerais (IFMG). The project combines **Internet of Things (IoT), embedded systems, cloud computing, mobile applications, and Machine Learning** to enable continuous monitoring of vital signs in elderly individuals, particularly in long-term care environments.
 
-### Android App (Kotlin + Jetpack Compose)
-- User authentication via Firebase (email & password)
-- Two user roles: **Caregiver** and **Doctor**
-- List of assigned elderly patients
-- Dashboard with:
-  - Heart rate (BPM)
-  - Oxygen saturation (SpO2)
-  - Body temperature
-  - Historical graph (BPM throughout the day)
-- Patient registration form
-- Local alert sound on fall detection
+The system collects physiological data through an ESP32-based device, transmits the measurements to the cloud, processes the collected data using a Machine Learning model for anomaly detection, and provides a mobile interface for real-time monitoring.
 
-### ESP32 Device
-- Collects:
-  - Heart rate (MAX30102 sensor)
-  - Oxygen level (MAX30102)
-  - Temperature (MLX90614)
-- Sends data to Firebase via Wi-Fi
-- Bluetooth provisioning available (under development)
+> **Note:** VitaSafe is an academic research prototype and is not intended to replace professional medical diagnosis or clinical decision-making.
 
 ---
 
-## 🛠️ Technologies Used
+## Overview
 
-| Layer             | Technology                          |
-|------------------|--------------------------------------|
-| Mobile App       | Kotlin, Jetpack Compose              |
-| Firebase         | Realtime Database, Authentication    |
-| IoT Device       | ESP32 (C++), MAX30102, MPU6050, MLX90614       |
-| Communication    | Wi-Fi (HTTP + Firebase SDK), BLE     |
+Continuous monitoring of vital signs can help caregivers and healthcare professionals identify potentially relevant physiological changes more quickly.
+
+VitaSafe was designed to explore the technical feasibility of integrating:
+
+- Embedded hardware and biomedical sensors
+- Wireless IoT communication
+- Cloud-based data storage
+- Mobile health monitoring
+- Machine Learning for anomaly detection
+
+The system focuses on three main physiological parameters:
+
+- **Heart rate (BPM)**
+- **Blood oxygen saturation (SpO₂)**
+- **Body temperature**
+
+The collected data is transmitted to the cloud and made available through a mobile application for visualization and monitoring.
 
 ---
 
-## 🔧 Setup Instructions
+## System Architecture
 
-### 1. Firebase Configuration
-- Create a Firebase project.
-- Enable **Authentication (Email/Password)**.
-- Create a **Realtime Database** with the following rules (temporarily, for dev):
+The VitaSafe architecture integrates data acquisition, cloud storage, Machine Learning processing, and mobile visualization.
 
-```json
-{
-  "rules": {
-    ".read": "now < 1752721200000",
-    ".write": "now < 1752721200000"
-  }
-}
+```text
+┌──────────────────────────────┐
+│          IoT Device          │
+│                              │
+│  ESP32                       │
+│  ├── MAX30102                │
+│  ├── MLX90614                │
+│  └── MPU6050                 │
+│                              │
+│  Vital Signs Collection      │
+└──────────────┬───────────────┘
+               │
+               │ Wi-Fi
+               ▼
+┌──────────────────────────────┐
+│        Cloud Layer           │
+│                              │
+│  Firebase Realtime Database  │
+│                              │
+│  Data Storage & Synchroniz.  │
+└──────────────┬───────────────┘
+               │
+               ├─────────────────────┐
+               │                     │
+               ▼                     ▼
+┌────────────────────────┐  ┌────────────────────────┐
+│   Machine Learning     │  │      Mobile App        │
+│                        │  │                        │
+│  Data Processing       │  │  Kotlin                │
+│  Feature Extraction   │  │  Jetpack Compose       │
+│  Random Forest         │  │  Firebase              │
+│  Anomaly Detection     │  │  Real-Time Monitoring  │
+└────────────────────────┘  └────────────────────────┘
+
+The ESP32 collects physiological measurements and transmits them through Wi-Fi to Firebase Realtime Database. The data can then be accessed by the mobile application and processed by the Machine Learning pipeline for anomaly detection.
+
