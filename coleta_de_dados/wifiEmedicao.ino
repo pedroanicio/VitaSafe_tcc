@@ -7,10 +7,10 @@
 #include <FirebaseESP32.h>
 #include <time.h>
 
-#define WIFI_SSID "Eric"
-#define WIFI_PASSWORD "pedrolucas01"
-#define FIREBASE_HOST "https://sensor-saude-tcc-default-rtdb.firebaseio.com/"
-#define FIREBASE_AUTH "suZUvaRdamGQiVHhXYMqtAJa66l1DMoJDHxiHGx3"
+#define WIFI_SSID "test"
+#define WIFI_PASSWORD "123"
+#define FIREBASE_HOST "https..."
+#define FIREBASE_AUTH "456"
 
 FirebaseData firebaseData;
 FirebaseConfig config;
